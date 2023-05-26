@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken')
 const jwtSecret = 'knhhkojijhjhoh9ug0u'
 const imageDownloader = require('image-downloader')
 const Place = require('./models/Place')
+const Booking = require('./models/Booking')
 const multer = require('multer')
 const fs = require('fs')
 require('dotenv').config()
@@ -23,6 +24,15 @@ app.use(
 app.use('/uploads', express.static(__dirname + '/uploads'))
 app.use(cookieParser())
 mongoose.connect(process.env.MONGOURL)
+
+function getUserDataFromReq(req) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(req.cookies.token, jwtSecret, {}, async (err, userData) => {
+      if (err) reject(err)
+      resolve(userData)
+    })
+  })
+}
 
 app.get('/test', (req, res) => {
   res.json('Test Ok')
@@ -132,10 +142,18 @@ app.post('/places', async (req, res) => {
       if (err) throw err
 
       const placeDoc = await Place.create({
-        owner:userData.id,price,
-        title,address,photos:addedPhotos,description,
-        perks,extraInfo,checkIn,checkOut,maxGuests,
-      });
+        owner: userData.id,
+        price,
+        title,
+        address,
+        photos: addedPhotos,
+        description,
+        perks,
+        extraInfo,
+        checkIn,
+        checkOut,
+        maxGuests,
+      })
 
       res.json(placeDoc) // move inside the callback
     })
@@ -144,7 +162,7 @@ app.post('/places', async (req, res) => {
   }
 })
 
-app.get('/places', async (req, res) => {
+app.get('/user-places', async (req, res) => {
   const { token } = req.cookies
   if (!token) {
     return res.status(401).json('Unauthorized')
@@ -165,50 +183,108 @@ app.get('/places/:id', async (req, res) => {
   const { id } = req.params
   res.json(await Place.findById(id))
 })
-
 app.put('/places', async (req, res) => {
-  const { token } = req.cookies
+  const { token } = req.cookies;
   const {
     id,
     title,
     address,
-    photos: addedPhotos,
+    addedPhotos,
     description,
-    extrainfo,
-    checkin,
-    checkout,
-    maxGuest,
     perks,
-  } = req.body
+    extraInfo,
+    checkIn,
+    checkOut,
+    maxGuests,
+    price,
+  } = req.body;
 
   jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-    if (err) throw err
-    const placeDoc = await Place.findById(id)
+    if (err) throw err;
 
-    if (userData.id === placeDoc.owner.toString()) {
-      placeDoc.set({
-        title,
-        address,
-        photos: addedPhotos,
-        description,
-        
-        perks,
-        extrainfo,
-        checkin,
-        checkout,
-        maxGuest,
-      })
-      await placeDoc.save()
-      res.json(placeDoc)
+    try {
+      const placeDoc = await Place.findById(id);
+      if (userData.id === placeDoc.owner.toString()) {
+        const updatedPlaceData = {
+          title: title || placeDoc.title,
+          address: address || placeDoc.address,
+          photos: addedPhotos ? [...placeDoc.photos, ...addedPhotos] : placeDoc.photos,
+          description: description || placeDoc.description,
+          perks: perks || placeDoc.perks,
+          extraInfo: extraInfo || placeDoc.extraInfo,
+          checkIn: checkIn || placeDoc.checkIn,
+          checkOut: checkOut || placeDoc.checkOut,
+          maxGuests: maxGuests || placeDoc.maxGuests,
+          price: price || placeDoc.price,
+        };
+
+        placeDoc.set(updatedPlaceData);
+        await placeDoc.save();
+        res.json('ok');
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred while updating the place.' });
     }
-  })
-})
+  });
+});
 
 
 app.delete('/places/:id', async (req, res) => {
   const { id } = req.params
   await Place.findByIdAndDelete(id)
   res.json(true)
+})
+
+//routes for index page
+app.get('/places', async (req, res) => {
+  res.json(await Place.find({}))
+})
+//Place page form booking
+app.post('/bookings', async (req, res) => {
+  const userData = await getUserDataFromReq(req)
+  const {
+    place,
+    checkIn,
+    checkOut,
+    numberOfGuests,
+    name,
+    phone,
+    price,
+    address
+  } = req.body
+  Booking.create({
+    place,
+    checkIn,
+    checkOut,
+    numberOfGuests,
+    name,
+    phone,
+    price,
+    user: userData.id,
+    address
+  })
+    .then((doc) => {
+      res.json(doc)
+    })
+    .catch((err) => {
+      throw err
+    })
+})
+
+app.get('/bookings', async (req, res) => {
+  try {
+    const userData = await getUserDataFromReq(req)
+    if (!userData) {
+      return res.status(401).json('Unauthorized')
+    }
+
+    const bookings = await Booking.find({ user: userData.id }).populate('place')
+    res.json(bookings)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json('Internal Server Error')
+  }
 })
 
 app.listen(4000, () => {

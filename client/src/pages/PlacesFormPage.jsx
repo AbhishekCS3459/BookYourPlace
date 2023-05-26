@@ -14,10 +14,11 @@ export default function PlacesFormPage() {
   const [description, setDescription] = useState('')
 
   const [perks, setPerks] = useState([])
-  const [extrainfo, setExtraInfo] = useState('')
+  const [extraInfo, setExtraInfo] = useState('')
   const [checkIn, setcheckIn] = useState('')
   const [checkOut, setcheckOut] = useState('')
   const [maxGuests, setMaxGuests] = useState(1)
+  const [price, setPrice] = useState(100)
   const [redirect, setRedirect] = useState(false)
   useEffect(() => {
     if (!id) {
@@ -25,8 +26,6 @@ export default function PlacesFormPage() {
     }
     axios.get(`/places/${id}`).then((response) => {
       const place = response.data
-      console.log(place)
-
       setTitle(place.title)
       setAddress(place.address)
 
@@ -34,10 +33,11 @@ export default function PlacesFormPage() {
 
       setDescription(place.description)
       setPerks(place.perks)
-      setExtraInfo(place.extrainfo)
+      setExtraInfo(place.extraInfo)
       setcheckIn(place.checkIn)
       setcheckOut(place.checkOut)
       setMaxGuests(place.maxGuests)
+      setPrice(place.price)
     })
   }, [id])
 
@@ -47,6 +47,7 @@ export default function PlacesFormPage() {
   const inputDescription = (text) => {
     return <p className="text-gray-500 text-sm">{text}</p>
   }
+  
   const savePlace = async (ev) => {
     ev.preventDefault()
     const placesData = {
@@ -54,11 +55,12 @@ export default function PlacesFormPage() {
       address,
       addedPhotos,
       description,
-      perks,
-      extrainfo,
+      extraInfo,
       checkIn,
       checkOut,
       maxGuests,
+      perks,
+      price,
     }
     if (id) {
       //update
@@ -122,14 +124,14 @@ export default function PlacesFormPage() {
 
           {preInput('Extra Info', 'House Rules, Cancellation Policy, etc.')}
           <textarea
-            value={extrainfo}
+            value={extraInfo}
             onChange={(ev) => setExtraInfo(ev.target.value)}
           />
           {preInput(
             'Check In & Out times',
             'add check in and check out times,rembeber to have some time window for cleaning the room between guests',
           )}
-          <div className="grid gap-2 sm:grid-cols-3">
+          <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
             <div>
               <h3 className="mt-2 -mb-1">Check In Time</h3>
               <input
@@ -156,8 +158,15 @@ export default function PlacesFormPage() {
                 onChange={(ev) => setMaxGuests(ev.target.value)}
               />
             </div>
+            <div>
+              <h3 className="mt-2 -mb-1">Price per Night</h3>
+              <input
+                type="number"
+                value={price}
+                onChange={(ev) => setPrice(ev.target.value)}
+              />
+            </div>
           </div>
-
           <div className="flex justify-center">
             <button className="bg-primary my-4 w-96 lg:w-[700px] rounded-xl text-white ">
               Save

@@ -45,16 +45,19 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
     })
   }
   const selectMainPhoto = (link, ev) => {
-    ev.preventDefault()
+    ev.preventDefault();
     if (visibleStar === '') {
-      setvisibleStart('hidden')
-      setvisibleYelloStart('')
+      setvisibleStart('hidden');
+      setvisibleYelloStart('');
     } else {
-      setvisibleStart('')
-      setvisibleYelloStart('hidden')
+      setvisibleStart('');
+      setvisibleYelloStart('hidden');
     }
-    onChange([link, addedPhotos.filter((photo) => photo !== link)])
-  }
+    
+    const addedPhotosWithoutSelected=addedPhotos.filter((photo) => photo !== link);
+    const newAddedPhotos=[link, ...addedPhotosWithoutSelected];
+    onChange(newAddedPhotos);
+  };
   return (
     <>
       <div className="flex gap-2">
