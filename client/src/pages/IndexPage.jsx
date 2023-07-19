@@ -9,6 +9,22 @@ export default function IndexPage() {
       setPlaces([...response.data])
     })
   }, [])
+  const shortit = (address) => {
+    const number_words = address.split(' ').filter(function (num) {
+      return num != ''
+    }).length
+    if (number_words >=5 || address.length > 15) {
+      const short_address = address
+        .split(' ')
+        .filter(function (num, index) {
+          return index < 3
+        })
+        .join(' ')  
+      return short_address + '...'
+    }
+
+    return address
+  }
   return (
     <div className="mt-8 grid gap-x-6 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {places.length > 0 &&
@@ -23,10 +39,10 @@ export default function IndexPage() {
                 />
               )}
             </div>
-            <h2 className="font-bold">{place.address}</h2>
+            <h2 className="font-bold">{shortit(place.address)}</h2>
             <h3 className="text-sm text-gray-500">{place.title}</h3>
             <div className="mt-1">
-              <span className="font-bold">${place.price}</span> per night
+              <span className="font-bold">Rs {place.price}</span> per night
             </div>
           </Link>
         ))}

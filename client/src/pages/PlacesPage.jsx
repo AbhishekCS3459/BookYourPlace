@@ -7,7 +7,8 @@ import PlaceImg from '../PlaceImg'
 export default function PlacesPage() {
   const [places, setPlaces] = useState([])
   useEffect(() => {
-    axios.get('/places').then((response) => {
+    axios.get('/myplaces').then((response) => {
+      console.log(response.data)
       setPlaces(response.data)
     })
   }, [])

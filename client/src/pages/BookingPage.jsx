@@ -18,7 +18,6 @@ export default function BookingPage() {
         const foundBooking = response.data.find(({_id}) => _id === id);
        
         if (foundBooking) {
-         console.log(foundBooking)
           setBooking(foundBooking);
         }
       });
