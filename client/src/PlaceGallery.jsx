@@ -35,7 +35,7 @@ import PropTypes from 'prop-types';
 //               <div key={photo.length}>
 //                 <img
 //                   className="aspect-square object-cover rounded-xl"
-//                   src={'http://localhost:4000/uploads/' + photo}
+//                   src={'https://bookyourplace.onrender.com/uploads/' + photo}
 //                   alt=""
 //                 />
 //               </div>
@@ -54,7 +54,7 @@ import PropTypes from 'prop-types';
 //               <img
 //                 onClick={() => setShowAllPhotos(true)}
 //                 className="aspect-square cursor-pointer object-cover "
-//                 src={'http://localhost:4000/uploads/' + place.photos[0]}
+//                 src={'https://bookyourplace.onrender.com/uploads/' + place.photos[0]}
 //                 alt=""
 //               />
 //             </div>
@@ -65,7 +65,7 @@ import PropTypes from 'prop-types';
 //             <img
 //               onClick={() => setShowAllPhotos(true)}
 //               className="aspect-square cursor-pointer object-cover "
-//               src={'http://localhost:4000/uploads/' + place.photos[1]}
+//               src={'https://bookyourplace.onrender.com/uploads/' + place.photos[1]}
 //               alt=""
 //             />
 //           )}
@@ -74,7 +74,7 @@ import PropTypes from 'prop-types';
 //               <img
 //                 onClick={() => setShowAllPhotos(true)}
 //                 className="aspect-square cursor-pointer object-cover relative top-2 "
-//                 src={'http://localhost:4000/uploads/' + place.photos[2]}
+//                 src={'https://bookyourplace.onrender.com/uploads/' + place.photos[2]}
 //                 alt=""
 //               />
 //             )}

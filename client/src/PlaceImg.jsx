@@ -11,14 +11,14 @@ if(!className){
      
             // <img
             //   className={className}
-            //   src={'http://localhost:4000/uploads/' + place.photos[index]}
+            //   src={'https://bookyourplace.onrender.com/uploads/' + place.photos[index]}
             //   alt=""
             // />
             <Image
             className={className}
-            src={'http://localhost:4000/uploads/' + place.photos[index]}
+            src={'https://bookyourplace.onrender.com/uploads/' + place.photos[index]}
             preview={{
-              src: 'http://localhost:4000/uploads/' + place.photos[index],
+              src: 'https://bookyourplace.onrender.com/uploads/' + place.photos[index],
             }}
           />
   )
