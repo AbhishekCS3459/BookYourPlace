@@ -14,6 +14,7 @@ const Booking = require("./models/Booking");
 const multer = require("multer");
 const fs = require("fs");
 const { log } = require("console");
+const port=process.env.PORT || 4000
 require("dotenv").config();
 app.use(express.json());
 app.use(
@@ -311,6 +312,6 @@ app.get("/bookings", async (req, res) => {
   }
 });
 
-app.listen(4000, () => {
-  console.log("Started in port ", 4000);
+app.listen(port, () => {
+  console.log("Started in port ", port);
 });
