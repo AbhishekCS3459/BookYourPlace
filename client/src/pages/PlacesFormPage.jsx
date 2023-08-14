@@ -86,7 +86,7 @@ export default function PlacesFormPage() {
   if (redirect) return <Navigate to="/account/places" />
   return (
     <>
-      <div className="">
+      <div className="text-[10px] sm:text-lg">
         <AccountNav />
 
         <form onSubmit={savePlace}>
@@ -98,7 +98,7 @@ export default function PlacesFormPage() {
             type="text"
             value={title}
             onChange={(ev) => setTitle(ev.target.value)}
-            placeholder="title:For Example Ashirbad Palace"
+            placeholder="title: Name of Hotel"
           />
           {preInput('Address', 'Address your Place')}
 
