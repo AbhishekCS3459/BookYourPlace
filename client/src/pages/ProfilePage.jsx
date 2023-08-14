@@ -12,6 +12,8 @@ export default function ProfilePage() {
   if (subpage === undefined) subpage = 'profile'
 
   if (!ready) return 'loading...'
+  
+{/* <ClockLoader color="#36d7b7" /> */}
   if (!user && ready && !redirect) return <Navigate to={'/login'} />
 
 
