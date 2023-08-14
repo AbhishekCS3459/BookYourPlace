@@ -23,7 +23,7 @@ export default function Header() {
           />
         </svg>
         <span className="font-bold  text-xs  sm:text-xl">
-          HotelBook
+          HotelWala
         </span>
       </Link>
       <div className=" ml-[1em] sm:ml-[0em] ">
