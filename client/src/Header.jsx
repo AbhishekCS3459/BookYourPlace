@@ -1,20 +1,20 @@
 // import React from 'react'
-import { useContext } from 'react'
-import { Link } from 'react-router-dom'
-import { UserContext } from './UserContext'
-import CurvedNav from './CurvedNav'
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "./UserContext";
+import CurvedNav from "./CurvedNav";
 export default function Header() {
-  const { user } = useContext(UserContext)
+  const { user } = useContext(UserContext);
   return (
-    <header className="flex justify-between ">
-      <Link to={'/'} className="flex items-center gap-1">
+    <header className="flex justify-between gap-4 sm:gap-0 ">
+      <Link to={"/"} className="flex items-center gap-1 -m-4 sm:-ml-0">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-8 h-8 -rotate-90 "
+          className="w-3 h-3 sm:w-8 sm:h-8 -rotate-90 "
         >
           <path
             strokeLinecap="round"
@@ -22,14 +22,17 @@ export default function Header() {
             d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
           />
         </svg>
-        <span className="font-bold text-lg">HotelWala</span>
+        <span className="font-bold  text-xs  sm:text-xl">
+          HotelWala
+        </span>
       </Link>
-
-      <CurvedNav />
+      <div className=" ml-[1em] sm:ml-[0em] ">
+        <CurvedNav />
+      </div>
 
       <Link
-        to={user ? '/account' : '/login'}
-        className="flex items-center gap-2  border rounded-full py-2 px-4  border-gray-300"
+        to={user ? "/account" : "/login"}
+        className="flex items-center gap-2  border  rounded-full px-2 sm:py-2 sm:px-4  border-gray-300 -mr-6 sm:-mr-0"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +40,7 @@ export default function Header() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6"
+          className=" w-3 h-3 sm:w-6 sm:h-6"
         >
           <path
             strokeLinecap="round"
@@ -50,7 +53,7 @@ export default function Header() {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="w-6 h-6 relative top-1"
+            className="   w-4 h-4 sm:w-6 sm:h-6 relative top-1"
           >
             <path
               fillRule="evenodd"
@@ -62,5 +65,5 @@ export default function Header() {
         {!!user && <div>{user.name}</div>}
       </Link>
     </header>
-  )
+  );
 }
