@@ -5,6 +5,8 @@ import axios from "axios";
 import PlacesPage from "./PlacesPage";
 import AccountNav from "../AccountNav";
 import { RiseLoader } from "react-spinners";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function ProfilePage() {
   const { user, ready, setUser } = useContext(UserContext); // Use the useContext hook
   const [redirect, setRedirect] = useState(null);
@@ -21,10 +23,25 @@ export default function ProfilePage() {
   if (!user && ready && !redirect) return <Navigate to={"/login"} />;
 
   async function logout() {
-    await axios.post("/logout");
-    setRedirect("/");
-    setUser(null);
+    toast.promise(
+      axios.post("/logout")
+        .then(() => {
+          setRedirect("/");
+          setUser(null);
+        })
+        .catch((error) => {
+          console.error("An error occurred during logout:", error);
+          // Handle the error gracefully, e.g., show an error message to the user
+          throw error;
+        }),
+      {
+        pending: 'Logging out...',
+        success: 'Logout successful 👋',
+        error: 'Logout failed 😕'
+      }
+    );
   }
+  
 
   if (redirect) {
     return <Navigate to={redirect} />;
@@ -39,6 +56,7 @@ export default function ProfilePage() {
           <button onClick={logout} className="primary max-w-md mt-2 text-white">
             Logout
           </button>
+          <ToastContainer className="w-80 text-xs sm:text-lg  mt-3 sm:mt-0 mx-8 sm:mx-1 sm:max-w-80" />
         </div>
       )}
       {subpage === "places" && <PlacesPage />}

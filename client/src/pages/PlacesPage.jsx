@@ -1,18 +1,23 @@
 import { Link } from 'react-router-dom'
+import { useContext } from 'react'
 import AccountNav from '../AccountNav'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import PlaceImg from '../PlaceImg'
-
+import { UserContext } from "../UserContext";
 export default function PlacesPage() {
   const [places, setPlaces] = useState([])
-  useEffect(() => {
-    axios.get('/myplaces').then((response) => {
-      console.log(response.data)
-      setPlaces(response.data)
-    })
-  }, [])
+  const { user, ready } = useContext(UserContext);
 
+  useEffect(() => {
+    try {
+      axios.get('/myplaces').then((response) => {
+        setPlaces(response.data);
+      });
+    } catch (error) {
+      console.error('An error occurred while fetching places:', error);
+    }
+  }, [user,ready]);
   return (
     <div>
       <AccountNav />

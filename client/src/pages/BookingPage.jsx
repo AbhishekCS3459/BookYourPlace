@@ -13,17 +13,25 @@ export default function BookingPage() {
   }, []);
 
   useEffect(() => {
-    if (id) {
-      axios.get("/bookings").then((response) => {
-        const foundBooking = response.data.find(({ _id }) => _id === id);
-
-        if (foundBooking) {
-          setBooking(foundBooking);
+    const fetchBooking = async () => {
+      if (id) {
+        try {
+          const response = await axios.get("/bookings");
+          const foundBooking = response.data.find(({ _id }) => _id === id);
+  
+          if (foundBooking) {
+            setBooking(foundBooking);
+          }
+        } catch (error) {
+          // Handle the error, e.g., log it or show an error message
+          console.error("Error fetching booking:", error);
         }
-      });
-    }
+      }
+    };
+  
+    fetchBooking();
   }, [id]);
-
+  
   if (!booking)
     return (
       <div className="flex justify-center items-center my-52">

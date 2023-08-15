@@ -1,21 +1,30 @@
-import { useEffect, useState } from 'react'
-import AccountNav from '../AccountNav'
-import axios from 'axios'
-import PlaceImg from '../PlaceImg'
+import { useEffect, useState } from "react";
+import AccountNav from "../AccountNav";
+import axios from "axios";
+import PlaceImg from "../PlaceImg";
 
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
-import { format, differenceInCalendarDays } from 'date-fns'
+import { format, differenceInCalendarDays } from "date-fns";
 export default function BookingsPage() {
-  const [bookings, setBookings] = useState([])
+  const [bookings, setBookings] = useState([]);
   useEffect(() => {
-    document.title = 'HotelWala | Bookings '
-  }, [])
+    document.title = "HotelWala | Bookings ";
+  }, []);
   useEffect(() => {
-    axios.get('/bookings').then((response) => {
-      setBookings(response.data)
-    })
-  }, [])
+    const fetchBookings = async () => {
+      try {
+        const response = await axios.get("/bookings");
+        setBookings(response.data);
+      } catch (error) {
+        // Handle the error, e.g., log it or show an error message
+        console.error("Error fetching bookings:", error);
+      }
+    };
+
+    fetchBookings();
+  }, []);
+
   if (bookings.length === 0)
     return (
       <div className=" text-center w-full h-full flex-row justify-center items-center">
@@ -23,7 +32,7 @@ export default function BookingsPage() {
         <div className=" text-center flex justify-center ">
           <Link
             className="inline-flex gap-2 bg-primary text-white py-2 px-6 rounded-full"
-            to={'/'}
+            to={"/"}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +52,7 @@ export default function BookingsPage() {
           </Link>
         </div>
       </div>
-    )
+    );
 
   return (
     <div className="">
@@ -80,7 +89,7 @@ export default function BookingsPage() {
                       />
                     </svg>
                   </div>
-                  {format(new Date(booking.checkIn), 'dd MMMM yyyy')}
+                  {format(new Date(booking.checkIn), "dd MMMM yyyy")}
                   &rarr;
                   <div className="flex">
                     <svg
@@ -97,7 +106,7 @@ export default function BookingsPage() {
                       />
                     </svg>
                   </div>
-                  {format(new Date(booking.checkOut), 'dd MMMM yyyy')}
+                  {format(new Date(booking.checkOut), "dd MMMM yyyy")}
                 </div>
 
                 <div className=" flex justify-between">
@@ -106,8 +115,8 @@ export default function BookingsPage() {
                       <div className="flex gap-1 text-gray-500">
                         {differenceInCalendarDays(
                           new Date(booking.checkOut),
-                          new Date(booking.checkIn),
-                        )}{' '}
+                          new Date(booking.checkIn)
+                        )}{" "}
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -168,8 +177,8 @@ export default function BookingsPage() {
                         </svg>
                       </div>
                       <div>
-                        {' '}
-                        Total Cost:{' '}
+                        {" "}
+                        Total Cost:{" "}
                         <span className=" font-bold text-lg">
                           Rs {booking.price}
                         </span>
@@ -202,5 +211,5 @@ export default function BookingsPage() {
           ))}
       </div>
     </div>
-  )
+  );
 }
