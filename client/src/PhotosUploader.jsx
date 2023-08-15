@@ -1,61 +1,75 @@
 // import React from 'react'
-import { useState } from 'react'
-import axios from 'axios'
-import Image from './Image'
+import { useState } from "react";
+import axios from "axios";
+import Image from "./Image";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function PhotosUploader({ addedPhotos, onChange }) {
-  const [photoLink, setPhotoLink] = useState('')
-  const [visibleYelloStar, setvisibleYelloStart] = useState('hidden')
-  const [visibleStar, setvisibleStart] = useState('')
+  const [photoLink, setPhotoLink] = useState("");
+  const [visibleYelloStar, setvisibleYelloStart] = useState("hidden");
+  const [visibleStar, setvisibleStart] = useState("");
   const addPhotoByLink = async (ev) => {
     ev.preventDefault();
-  const { data: filename } = await axios.post('/upload-by-link', {
+    const { data: filename } = await axios.post("/upload-by-link", {
       Link: photoLink,
-    })
+    });
     onChange((prev = []) => {
-      return [...prev, filename]
-    })
-    setPhotoLink('')
-  }
+      return [...prev, filename];
+    });
+    setPhotoLink("");
+  };
 
   const uploadPhotos = (ev) => {
-    const files = ev.target.files
-    const data = new FormData()
+    const files = ev.target.files;
+    const data = new FormData();
     for (let i = 0; i < files.length; i++) {
-      data.append('photos', files[i])
+      data.append("photos", files[i]);
     }
 
     axios
-      .post('/upload', data, {
-        headers: { 'Content-type': 'multipart/form-data' },
+      .post("/upload", data, {
+        headers: { "Content-type": "multipart/form-data" },
       })
       .then((res) => {
-        const { data: filenames } = res
+        const { data: filenames } = res;
         onChange((prev = []) => {
-          return [...prev, ...filenames]
-        })
+          return [...prev, ...filenames];
+        });
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
+        console.log(error);
+      });
+  };
   const removePhoto = (link, ev) => {
-    ev.preventDefault()
+    ev.preventDefault();
     onChange((prev = []) => {
-      return prev.filter((photo) => photo !== link)
-    })
-  }
+      toast.warn("🦄 Wow so easy!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return prev.filter((photo) => photo !== link);
+    });
+  };
   const selectMainPhoto = (link, ev) => {
     ev.preventDefault();
-    if (visibleStar === '') {
-      setvisibleStart('hidden');
-      setvisibleYelloStart('');
+    if (visibleStar === "") {
+      setvisibleStart("hidden");
+      setvisibleYelloStart("");
     } else {
-      setvisibleStart('');
-      setvisibleYelloStart('hidden');
+      setvisibleStart("");
+      setvisibleYelloStart("hidden");
     }
-    
-    const addedPhotosWithoutSelected=addedPhotos.filter((photo) => photo !== link);
-    const newAddedPhotos=[link, ...addedPhotosWithoutSelected];
+
+    const addedPhotosWithoutSelected = addedPhotos.filter(
+      (photo) => photo !== link
+    );
+    const newAddedPhotos = [link, ...addedPhotosWithoutSelected];
     onChange(newAddedPhotos);
   };
   return (
@@ -63,7 +77,7 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
       <div className="flex gap-2">
         <input
           type="text"
-          placeholder={'Add using Link....jpg'}
+          placeholder={"Add using Link....jpg"}
           value={photoLink}
           onChange={(ev) => setPhotoLink(ev.target.value)}
         />
@@ -79,12 +93,16 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
         {addedPhotos &&
           addedPhotos.length > 0 &&
           addedPhotos.map((link) => (
-            <div key={link} className="h-32 relative flex w-full object-cover ">
+            <div
+              key={link}
+              className="h-24 sm:h-32 relative flex w-full object-cover "
+            >
               <Image
                 className="rounded-2xl w-full object-cover"
-                src={link}
+                src={`https://bookyourplace.onrender.com/uploads/${link}`}
                 alt=""
               />
+
               <button
                 onClick={(ev) => removePhoto(link, ev)}
                 className="absolute bottom-1 right-1 text-white bg-black bg-opacity-50 rounded-xl py-2 px-3 cursor-pointer"
@@ -95,7 +113,7 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="w-3 h-3  sm:w-6 sm:h-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -113,7 +131,7 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className={`w-6 h-6 text-yellow-400 `}
+                    className={`w-3 h-3  sm:w-6 sm:h-6 text-yellow-400 `}
                   >
                     <path
                       fillRule="evenodd"
@@ -129,7 +147,7 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className={`w-6 h-6`}
+                    className={`w-3 h-3  sm:w-6 sm:h-6`}
                   >
                     <path
                       strokeLinecap="round"
@@ -166,5 +184,5 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
         </label>
       </div>
     </>
-  )
+  );
 }

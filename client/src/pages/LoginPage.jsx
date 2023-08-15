@@ -29,6 +29,7 @@ export default function LoginPage() {
     try {
       const { data } = await axios.post("/login", { email, password });
       setUser(data);
+      localStorage.setItem("token", data.token); // S
       // Use toast.promise for handling login promise
       await toast.promise(axios.post("/login", { email, password }), {
         pending: "Logging in...",
