@@ -84,26 +84,26 @@ export default function BookingWidget({ place }) {
           version="1.1"
           id="Layer_1"
           xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
           viewBox="-51.2 -51.2 614.40 614.40"
-          xml:space="preserve"
+          xmlSpace="preserve"
           stroke="#36ff33"
           transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)"
         >
-          <g id="SVGRepo_bgCarrier" stroke-width="0">
+          <g id="SVGRepo_bgCarrier" strokeWidth="0">
             <path
               transform="translate(-51.2, -51.2), scale(19.2)"
               d="M16,29.591262949630618C20.531026213594913,29.62621019132838,25.79227451605486,29.59142258138702,28.371742082195297,25.866135084667334C30.862210618688486,22.26938069172347,29.159744566194355,17.34873925660956,27.177352234815466,13.448842291443212C25.742224481549414,10.625561409552748,22.31172947815609,10.169001965982913,19.578919586936276,8.568296901114994C16.247370991408037,6.616889037783783,13.52041004895839,1.9934774648119904,9.897086141209344,3.3271687907833574C6.232434328086571,4.676072300462515,6.764150146736428,9.889605611426433,5.746664480587004,13.659743076961243C4.635173299033026,17.7782035974388,1.5566520189368576,22.090005781492156,3.8652756422976484,25.677119756690743C6.285236661547522,29.437228552142685,11.528597523198172,29.55677557839981,16,29.591262949630618"
               fill="#ffffff"
-              strokewidth="0"
+              strokeWidth="0"
             ></path>
           </g>
           <g
             id="SVGRepo_tracerCarrier"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             stroke="#CCCCCC"
-            stroke-width="3.072"
+            strokeWidth="3.072"
           ></g>
           <g id="SVGRepo_iconCarrier">
             {" "}

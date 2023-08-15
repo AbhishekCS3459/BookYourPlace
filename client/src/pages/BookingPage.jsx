@@ -18,7 +18,7 @@ export default function BookingPage() {
         try {
           const response = await axios.get("/bookings");
           const foundBooking = response.data.find(({ _id }) => _id === id);
-  
+
           if (foundBooking) {
             setBooking(foundBooking);
           }
@@ -28,10 +28,10 @@ export default function BookingPage() {
         }
       }
     };
-  
+
     fetchBooking();
   }, [id]);
-  
+
   if (!booking)
     return (
       <div className="flex justify-center items-center my-52">
@@ -42,15 +42,15 @@ export default function BookingPage() {
     );
 
   return (
-    <div className="my-8">
-      <h1 className="text-3xl">{booking.place.title}</h1>
+    <div className="my-4 sm:my-8">
+      <h1 className="text-xl sm:text-3xl">{booking.place.title}</h1>
       <AddressLink className={"my-2 block"}>
         {booking.place.address}
       </AddressLink>
-      <div className="bg-gray-200 p-4 mb-4 rounded-2xl">
-        <h2 className="text-xl">
+      <div className="bg-gray-300  p-2 sm:p-4  mb-2 sm:mb-4 rounded-2xl " >
+        <h2 className="text-lg sm:text-3xl">
           Your Booking Information
-          <BookingDate booking={booking} />
+          <BookingDate booking={booking}  />
         </h2>
       </div>
       <PlaceGallery place={booking.place} />

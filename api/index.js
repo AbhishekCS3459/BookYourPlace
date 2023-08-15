@@ -24,6 +24,7 @@ const corsOptions = {
     const allowedOrigins = [
       "http://localhost:5173",
       "https://book-your-place-azure.vercel.app",
+      "*"
       // Add more allowed origins here if needed
     ];
 

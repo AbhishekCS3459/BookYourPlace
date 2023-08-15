@@ -32,7 +32,7 @@ export default function Header() {
         to={user ? "/account" : "/login"}
         className="flex items-center gap-2  border  rounded-full px-2 sm:py-2 sm:px-4  border-gray-300 -mr-6 sm:-mr-0"
       >
-        {!user && (
+        {/* {!user && ( */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -47,13 +47,13 @@ export default function Header() {
               d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
             />
           </svg>
-        )}
-        <div className="bg-gray-500 text-white rounded-full border border-gray-500 overflow-hidden">
+        {/* )} */}
+        <div className="bg-gray-500 text-white rounded-full border  overflow-hidden border-solid border-green-800 animate-pulse">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="flex-shrink w-4 h-4 sm:w-6 sm:h-6 relative top-1"
+            className="flex-shrink w-4 h-4 sm:w-6 sm:h-6 relative top-1  "
           >
             <path
               fillRule="evenodd"
@@ -62,7 +62,7 @@ export default function Header() {
             />
           </svg>
         </div>
-        {!!user && <div className="text-sm sm:text-lg">{user.name}</div>}
+        {/* {!!user && <div className="text-sm sm:text-lg">{user.name}</div>} */}
       </Link>
     </header>
   );

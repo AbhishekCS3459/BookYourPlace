@@ -15,7 +15,7 @@ import PlacePage from './pages/PlacePage'
 import BookingsPage from './pages/BookingsPage'
 import BookingPage from './pages/BookingPage'
 
-axios.defaults.baseURL='https://bookingbackend-ogyn.onrender.com/'
+axios.defaults.baseURL='https://bookingbackend-ogyn.onrender.com'
 
 // axios.defaults.baseURL='https://bookyourplace.onrender.com'
 axios.defaults.withCredentials=true;
