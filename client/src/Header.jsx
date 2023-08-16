@@ -22,7 +22,7 @@ export default function Header() {
             d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
           />
         </svg>
-        <span className="font-bold  text-xs  sm:text-xl">HotelWala</span>
+        <span className="font-bold  text-xs  sm:text-xl">Hotel</span>
       </Link>
       <div className=" ml-[1em] sm:ml-[0em] ">
         <CurvedNav />
